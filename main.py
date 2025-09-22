@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 import google.generativeai as genai
 import json
 import io
+import os
 from PIL import Image
 import logging
 
@@ -18,7 +19,10 @@ app = FastAPI(
 )
 
 # Configure Gemini API
-API_KEY = "AIzaSyAs7-TxN98PFupb3tko2TxCEFjAV7jPdAU"
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable is required")
+
 genai.configure(api_key=API_KEY)
 
 # Initialize the model
